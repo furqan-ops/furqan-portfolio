@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2 } from 'lucide-react'
+import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2, Bot, Play, Check } from 'lucide-react'
 
 type Project = {
   title: string
@@ -99,6 +99,99 @@ const certifications = [
   ['✦', 'Claude 101 AI Fluency', 'Anthropic'],
 ]
 
+const dynamicRoles = [
+  'Engineer',
+  'RevOps Architect',
+  'Agent Developer',
+  'n8n Specialist'
+]
+
+const liveEvents = [
+  { time: '14:20:01', tag: 'WEBHOOK', tagClass: 'webhook', text: 'hubspot.deal_created ($36.1K ARR)' },
+  { time: '14:20:02', tag: 'AGENT', tagClass: 'agent', text: 'LangGraph ICP Scoring: 94/100 · High Intent' },
+  { time: '14:20:03', tag: 'SYNC', tagClass: 'crm', text: 'Enriched via Apollo & logged to HubSpot' },
+  { time: '14:20:03', tag: 'DISPATCH', tagClass: 'success', text: 'Slack alert sent to Senior AE in 0.36s' },
+  { time: '14:20:04', tag: 'STATUS', tagClass: 'success', text: 'Pipeline completed · 200 OK' },
+]
+
+function Typewriter({ words }: { words: string[] }) {
+  const [index, setIndex] = useState(0)
+  const [subIndex, setSubIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  useEffect(() => {
+    const currentWord = words[index]
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (subIndex < currentWord.length) {
+          setSubIndex((prev) => prev + 1)
+        } else {
+          setTimeout(() => setIsDeleting(true), 2200)
+        }
+      } else {
+        if (subIndex > 0) {
+          setSubIndex((prev) => prev - 1)
+        } else {
+          setIsDeleting(false)
+          setIndex((prev) => (prev + 1) % words.length)
+        }
+      }
+    }, isDeleting ? 30 : 70)
+
+    return () => clearTimeout(timeout)
+  }, [subIndex, isDeleting, index, words])
+
+  return (
+    <span className="typewriter-wrap">
+      <span>{words[index].substring(0, subIndex)}</span>
+      <span className="typewriter-caret">|</span>
+    </span>
+  )
+}
+
+function StatCounter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {
+  const [val, setVal] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !hasAnimated) {
+        setHasAnimated(true)
+        const duration = 1600
+        const startTime = performance.now()
+
+        const step = (now: number) => {
+          const progress = Math.min((now - startTime) / duration, 1)
+          const ease = 1 - Math.pow(1 - progress, 3)
+          setVal(Math.floor(ease * target))
+
+          if (progress < 1) {
+            requestAnimationFrame(step)
+          } else {
+            setVal(target)
+          }
+        }
+        requestAnimationFrame(step)
+      }
+    }, { threshold: 0.15 })
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, hasAnimated])
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {val >= 1000 ? val.toLocaleString() : val}
+      {suffix}
+    </span>
+  )
+}
+
 function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
     <motion.div
@@ -117,8 +210,15 @@ export default function Page() {
   const [selected, setSelected] = useState<Project | null>(null)
   const [filter, setFilter] = useState('All')
   const [attendanceOpen, setAttendanceOpen] = useState(false)
+  const [terminalTab, setTerminalTab] = useState<'code' | 'logs'>('code')
 
   const visibleProjects = filter === 'All' ? projects : projects.filter((project) => project.categories.includes(filter))
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`)
+    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
+  }
 
   return (
     <div suppressHydrationWarning className={dark ? 'dark min-h-screen' : 'min-h-screen'}>
@@ -144,8 +244,14 @@ export default function Page() {
         <main id="top">
           <section className="hero section-pad">
             <div className="hero-copy">
-              <p className="eyebrow"><span className="status-dot" /> Available for automation projects</p>
-              <h1>AI &amp; Automation<br /><em>Engineer</em></h1>
+              <p className="eyebrow">
+                <span className="status-radar">
+                  <span className="status-ping" />
+                  <span className="status-dot" />
+                </span>
+                Available for automation projects
+              </p>
+              <h1>AI &amp; Automation<br /><em><Typewriter words={dynamicRoles} /></em></h1>
               <p className="hero-lede">AI systems and automated operations that remove manual work from growing businesses.</p>
               <p className="hero-revops">Specializing in RevOps pipelines, CRM architecture (HubSpot &amp; GoHighLevel), and autonomous AI agents that convert inbound signals into pipeline revenue.</p>
               <div className="hero-actions">
@@ -154,22 +260,72 @@ export default function Page() {
               </div>
             </div>
 
-            <div className="terminal-card" aria-label="Terminal showing an automation workflow">
-              <div className="terminal-top">
-                <span><Circle /><Circle /><Circle /></span>
-                <small>revops/pipeline.py</small>
-                <span className="terminal-live">● live</span>
+            <div className="terminal-wrapper">
+              {/* Floating Integration Badges */}
+              <div className="floating-badge badge-n8n" aria-hidden="true">
+                <Workflow className="badge-icon" />
+                <span>n8n Workflows</span>
               </div>
-              <div className="terminal-body">
-                <p><span className="terminal-muted">01</span> <b>@webhook.on</b>(<i>&quot;hubspot.lead_created&quot;</i>)</p>
-                <p><span className="terminal-muted">02</span> <b>async def</b> <strong>route_deal</strong>(lead: Lead):</p>
-                <p className="indent"><span className="terminal-muted">03</span> score = <b>await</b> agent.qualify(lead)</p>
-                <p className="indent"><span className="terminal-muted">04</span> <b>if</b> score &gt;= <strong>80</strong>:</p>
-                <p className="indent" style={{ paddingLeft: '48px' }}><span className="terminal-muted">05</span> <b>return await</b> crm.dispatch(lead, <i>&quot;ae-priority&quot;</i>)</p>
-                <p className="terminal-muted cursor">_</p>
+              <div className="floating-badge badge-hubspot" aria-hidden="true">
+                <Globe2 className="badge-icon" />
+                <span>HubSpot CRM</span>
               </div>
-              <div className="terminal-footer">
-                <Workflow /> n8n + HubSpot pipeline <span>•</span> <Zap /> 36s response
+              <div className="floating-badge badge-zapier" aria-hidden="true">
+                <Zap className="badge-icon" />
+                <span>Zapier Hooks</span>
+              </div>
+              <div className="floating-badge badge-langgraph" aria-hidden="true">
+                <Bot className="badge-icon" />
+                <span>AI Agents</span>
+              </div>
+
+              <div className="terminal-card" aria-label="Terminal showing an automation workflow">
+                <div className="terminal-top">
+                  <span><Circle /><Circle /><Circle /></span>
+                  <div className="terminal-tabs">
+                    <button
+                      type="button"
+                      className={`terminal-tab-btn ${terminalTab === 'code' ? 'active' : ''}`}
+                      onClick={() => setTerminalTab('code')}
+                    >
+                      <Code2 /> pipeline.py
+                    </button>
+                    <button
+                      type="button"
+                      className={`terminal-tab-btn ${terminalTab === 'logs' ? 'active' : ''}`}
+                      onClick={() => setTerminalTab('logs')}
+                    >
+                      <Play /> live_events.log
+                    </button>
+                  </div>
+                  <span className="terminal-live">● live</span>
+                </div>
+
+                {terminalTab === 'code' ? (
+                  <div className="terminal-body">
+                    <p><span className="terminal-muted">01</span> <b>@webhook.on</b>(<i>&quot;hubspot.lead_created&quot;</i>)</p>
+                    <p><span className="terminal-muted">02</span> <b>async def</b> <strong>route_deal</strong>(lead: Lead):</p>
+                    <p className="indent"><span className="terminal-muted">03</span> score = <b>await</b> agent.qualify(lead)</p>
+                    <p className="indent"><span className="terminal-muted">04</span> <b>if</b> score &gt;= <strong>80</strong>:</p>
+                    <p className="indent" style={{ paddingLeft: '48px' }}><span className="terminal-muted">05</span> <b>return await</b> crm.dispatch(lead, <i>&quot;ae-priority&quot;</i>)</p>
+                    <p className="terminal-muted cursor">_</p>
+                  </div>
+                ) : (
+                  <div className="terminal-body terminal-logs">
+                    {liveEvents.map((evt, idx) => (
+                      <div key={idx} className="terminal-log-row">
+                        <span className="terminal-log-time">{evt.time}</span>
+                        <span className={`terminal-log-tag ${evt.tagClass}`}>{evt.tag}</span>
+                        <span className="terminal-log-text">{evt.text}</span>
+                      </div>
+                    ))}
+                    <p className="terminal-muted cursor">_</p>
+                  </div>
+                )}
+
+                <div className="terminal-footer">
+                  <Workflow /> n8n + HubSpot pipeline <span>•</span> <Zap /> 36s response
+                </div>
               </div>
             </div>
           </section>
@@ -177,16 +333,16 @@ export default function Page() {
           <section className="stats section-pad">
             <div className="stats-grid">
               {[
-                ['75%', 'Less manual entry.', 'Applivity resume pipeline (n8n).'],
-                ['5,000+', 'Applicants processed.', 'Through automated extraction.'],
-                ['40%', 'Lower repeat AI query costs.', 'Through semantic caching.'],
-                ['36 sec', 'Speed-to-lead.', 'On a $36.1K GoHighLevel pipeline.'],
-              ].map(([value, label, context], i) => (
-                <Reveal key={value} delay={i * 0.07}>
+                { target: 75, suffix: '%', label: 'Less manual entry.', context: 'Applivity resume pipeline (n8n).' },
+                { target: 5000, suffix: '+', label: 'Applicants processed.', context: 'Through automated extraction.' },
+                { target: 40, suffix: '%', label: 'Lower repeat AI query costs.', context: 'Through semantic caching.' },
+                { target: 36, suffix: ' sec', label: 'Speed-to-lead.', context: 'On a $36.1K GoHighLevel pipeline.' },
+              ].map((item, i) => (
+                <Reveal key={item.label} delay={i * 0.07}>
                   <div className="stat">
-                    <strong>{value}</strong>
-                    <b>{label}</b>
-                    <span>{context}</span>
+                    <strong><StatCounter target={item.target} suffix={item.suffix} /></strong>
+                    <b>{item.label}</b>
+                    <span>{item.context}</span>
                   </div>
                 </Reveal>
               ))}
@@ -266,6 +422,7 @@ export default function Page() {
                   <article
                     className="project-card"
                     onClick={() => setSelected(project)}
+                    onMouseMove={handleMouseMove}
                     tabIndex={0}
                     onKeyDown={(e) => e.key === 'Enter' && setSelected(project)}
                   >
@@ -407,6 +564,7 @@ export default function Page() {
               aria-labelledby="modal-title"
             >
               <button
+                type="button"
                 className="modal-close"
                 aria-label="Close details"
                 onClick={() => { setSelected(null); setAttendanceOpen(false) }}
