@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2, Bot, Play, Check } from 'lucide-react'
+import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2, Bot, Play, Check, Copy, Command, Search, Clock, Sparkles } from 'lucide-react'
 
 type Project = {
   title: string
@@ -106,7 +106,7 @@ const dynamicRoles = [
   'n8n Specialist'
 ]
 
-const liveEvents = [
+const defaultLiveEvents = [
   { time: '14:20:01', tag: 'WEBHOOK', tagClass: 'webhook', text: 'hubspot.deal_created ($36.1K ARR)' },
   { time: '14:20:02', tag: 'AGENT', tagClass: 'agent', text: 'LangGraph ICP Scoring: 94/100 · High Intent' },
   { time: '14:20:03', tag: 'SYNC', tagClass: 'crm', text: 'Enriched via Apollo & logged to HubSpot' },
@@ -192,6 +192,46 @@ function StatCounter({ target, suffix = '', prefix = '' }: { target: number; suf
   )
 }
 
+function usePktTime() {
+  const [time, setTime] = useState('')
+  useEffect(() => {
+    const update = () => {
+      try {
+        const now = new Date()
+        const formatted = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'Asia/Karachi',
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        }).format(now)
+        setTime(formatted)
+      } catch {
+        setTime('12:00:00 AM')
+      }
+    }
+    update()
+    const interval = setInterval(update, 1000)
+    return () => clearInterval(interval)
+  }, [])
+  return time || '12:00:00 AM'
+}
+
+function CopyEmailButton({ className = 'copy-email-btn' }: { className?: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText('furqantahir2222@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2200)
+  }
+  return (
+    <button type="button" className={className} onClick={handleCopy} aria-label="Copy email address">
+      {copied ? <Check /> : <Copy />}
+      <span>{copied ? 'Copied to clipboard!' : 'Copy email'}</span>
+    </button>
+  )
+}
+
 function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   return (
     <motion.div
@@ -211,8 +251,50 @@ export default function Page() {
   const [filter, setFilter] = useState('All')
   const [attendanceOpen, setAttendanceOpen] = useState(false)
   const [terminalTab, setTerminalTab] = useState<'code' | 'logs'>('code')
+  const [liveEventsList, setLiveEventsList] = useState(defaultLiveEvents)
+  const [isSimulating, setIsSimulating] = useState(false)
+  const [cmdOpen, setCmdOpen] = useState(false)
+  const [cmdSearch, setCmdSearch] = useState('')
 
+  const pktTime = usePktTime()
   const visibleProjects = filter === 'All' ? projects : projects.filter((project) => project.categories.includes(filter))
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setCmdOpen((prev) => !prev)
+      }
+      if (e.key === 'Escape') {
+        setCmdOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const runSimulation = () => {
+    setTerminalTab('logs')
+    setIsSimulating(true)
+    setLiveEventsList([])
+
+    const simSteps = [
+      { time: '00:01', tag: 'WEBHOOK', tagClass: 'webhook', text: 'hubspot.deal_created ($42,500 Inbound Ingest)' },
+      { time: '00:02', tag: 'AGENT', tagClass: 'agent', text: 'LangGraph: ICP Fit Score 96/100 · Tier-1 Priority' },
+      { time: '00:03', tag: 'SYNC', tagClass: 'crm', text: 'Apollo company metadata enriched · CRM deal owner assigned' },
+      { time: '00:04', tag: 'DISPATCH', tagClass: 'success', text: 'Slack #sales-alerts notified with deal brief (0.32s)' },
+      { time: '00:04', tag: 'SUCCESS', tagClass: 'success', text: 'Event-driven pipeline completed · 200 OK' },
+    ]
+
+    simSteps.forEach((step, i) => {
+      setTimeout(() => {
+        setLiveEventsList((prev) => [...prev, step])
+        if (i === simSteps.length - 1) {
+          setIsSimulating(false)
+        }
+      }, (i + 1) * 550)
+    })
+  }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -220,9 +302,27 @@ export default function Page() {
     e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
   }
 
+  const cmdItems = [
+    { id: 'projects', title: 'Selected Projects & Case Studies', category: 'Navigation', icon: <Workflow />, action: () => { document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'experience', title: 'Work Experience at Applivity', category: 'Navigation', icon: <Code2 />, action: () => { document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'skills', title: 'Toolkit & Tech Stack', category: 'Navigation', icon: <Zap />, action: () => { document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'contact', title: 'Contact Information', category: 'Navigation', icon: <Mail />, action: () => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'sim', title: 'Run Live Terminal Simulation', category: 'Actions', icon: <Play />, action: () => { runSimulation(); document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'copy-email', title: 'Copy Email Address', category: 'Actions', icon: <Copy />, action: () => { navigator.clipboard.writeText('furqantahir2222@gmail.com'); setCmdOpen(false) } },
+    { id: 'github', title: 'Open GitHub Profile', category: 'Actions', icon: <Code2 />, action: () => { window.open('https://github.com/furqan-ops', '_blank'); setCmdOpen(false) } },
+    { id: 'theme', title: 'Toggle Light / Dark Mode', category: 'Preferences', icon: <Moon />, action: () => { setDark((d) => !d); setCmdOpen(false) } },
+  ]
+
+  const filteredCmdItems = cmdSearch.trim() === ''
+    ? cmdItems
+    : cmdItems.filter((item) => item.title.toLowerCase().includes(cmdSearch.toLowerCase()) || item.category.toLowerCase().includes(cmdSearch.toLowerCase()))
+
   return (
     <div suppressHydrationWarning className={dark ? 'dark min-h-screen' : 'min-h-screen'}>
       <div className="site-shell">
+        <div className="site-bg-grid" aria-hidden="true" />
+        <div className="hero-glow-mesh" aria-hidden="true" />
+
         <header className="nav-wrap">
           <nav className="nav" aria-label="Main navigation">
             <a className="brand" href="#top">MFT<span>.</span></a>
@@ -233,6 +333,14 @@ export default function Page() {
               <a href="#skills">Skills</a>
             </div>
             <div className="nav-actions">
+              <button
+                type="button"
+                className="cmd-k-trigger"
+                onClick={() => setCmdOpen(true)}
+                title="Quick actions (⌘K / Ctrl+K)"
+              >
+                <Command /> <span>⌘K</span>
+              </button>
               <button className="theme-toggle" aria-label="Toggle dark mode" onClick={() => setDark(!dark)}>
                 {dark ? <Sun /> : <Moon />}
               </button>
@@ -256,6 +364,7 @@ export default function Page() {
               <p className="hero-revops">Specializing in RevOps pipelines, CRM architecture (HubSpot &amp; GoHighLevel), and autonomous AI agents that convert inbound signals into pipeline revenue.</p>
               <div className="hero-actions">
                 <a className="button button-primary" href="#projects">View Projects <ArrowUpRight /></a>
+                <CopyEmailButton />
                 <a className="button button-ghost" href="#contact">Contact Me <Mail /></a>
               </div>
             </div>
@@ -298,7 +407,15 @@ export default function Page() {
                       <Play /> live_events.log
                     </button>
                   </div>
-                  <span className="terminal-live">● live</span>
+                  <button
+                    type="button"
+                    className="terminal-run-btn"
+                    onClick={runSimulation}
+                    disabled={isSimulating}
+                    title="Run live automation simulation"
+                  >
+                    <Sparkles /> {isSimulating ? 'Running...' : 'Run Simulation'}
+                  </button>
                 </div>
 
                 {terminalTab === 'code' ? (
@@ -312,7 +429,7 @@ export default function Page() {
                   </div>
                 ) : (
                   <div className="terminal-body terminal-logs">
-                    {liveEvents.map((evt, idx) => (
+                    {liveEventsList.map((evt, idx) => (
                       <div key={idx} className="terminal-log-row">
                         <span className="terminal-log-time">{evt.time}</span>
                         <span className={`terminal-log-tag ${evt.tagClass}`}>{evt.tag}</span>
@@ -351,15 +468,55 @@ export default function Page() {
 
           <section id="about" className="section-pad about section-line">
             <Reveal><div className="section-kicker">01 / About</div></Reveal>
-            <div className="about-grid">
-              <Reveal>
-                <h2>Less busywork.<br /><span>More momentum.</span></h2>
+            <Reveal>
+              <h2>Less busywork.<br /><span>More momentum.</span></h2>
+            </Reveal>
+
+            {/* Modern 2026 Bento Grid */}
+            <div className="bento-grid">
+              <Reveal delay={0.08}>
+                <div className="bento-card bento-card-main">
+                  <div className="bento-icon"><Zap /></div>
+                  <h3>Systems that eliminate operational drag</h3>
+                  <p>
+                    Two years of engineering production automations at Applivity. Focused on transforming brittle manual spreadsheets and disconnected CRMs into self-healing, deterministic pipelines powered by n8n, Python, and autonomous AI agents.
+                  </p>
+                  <p>
+                    Specializing in high-throughput webhook routing, CRM telemetry, and LangGraph multi-agent systems built around outcome-first business utility.
+                  </p>
+                </div>
               </Reveal>
-              <Reveal delay={0.1}>
-                <div className="about-copy">
-                  <p>Two years of hands-on automation work at Applivity, focused on n8n, Python, and AI agents.</p>
-                  <p>Currently building RevOps and AI systems that connect the right data, tools, and people.</p>
-                  <p>Based in <b>Rawalpindi, Pakistan.</b></p>
+
+              <Reveal delay={0.14}>
+                <div className="bento-card bento-card-flow">
+                  <div className="bento-top-label">
+                    <Workflow />
+                    <span>ARCHITECTURE BLUEPRINT</span>
+                  </div>
+                  <div className="flow-visual">
+                    <div className="flow-node">Inbound Webhook</div>
+                    <div className="flow-connector"><span className="flow-pulse" /></div>
+                    <div className="flow-node highlight">n8n Router</div>
+                    <div className="flow-connector"><span className="flow-pulse" /></div>
+                    <div className="flow-node">LangGraph Agent</div>
+                    <div className="flow-connector"><span className="flow-pulse" /></div>
+                    <div className="flow-node">HubSpot / Slack</div>
+                  </div>
+                  <p className="flow-caption">Event-driven, sub-second execution with automated human-in-the-loop triage.</p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.2}>
+                <div className="bento-card bento-card-clock">
+                  <div className="bento-clock-header">
+                    <span className="status-radar">
+                      <span className="status-ping" />
+                      <span className="status-dot" />
+                    </span>
+                    <span>LOCAL TIME &amp; AVAILABILITY</span>
+                  </div>
+                  <div className="bento-clock-time">{pktTime} <small>PKT (UTC+5)</small></div>
+                  <p>Rawalpindi, Pakistan · Available for high-impact remote engineering contracts worldwide.</p>
                 </div>
               </Reveal>
             </div>
@@ -441,7 +598,14 @@ export default function Page() {
                       </picture>
                       <span>{project.title}</span>
                     </div>
-                    <div className="project-number">0{i + 1}</div>
+
+                    <div className="project-card-header">
+                      <div className="project-number">0{i + 1}</div>
+                      <span className={`category-pill ${project.categories[0].toLowerCase().replace(/\s+/g, '-')}`}>
+                        {project.categories[0]}
+                      </span>
+                    </div>
+
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                     <div className="tags">
@@ -522,6 +686,7 @@ export default function Page() {
               <p>Tell me where time is getting lost. I’ll help map the next step.</p>
               <div className="contact-actions">
                 <a className="button button-primary" href="mailto:furqantahir2222@gmail.com"><Mail /> Email me</a>
+                <CopyEmailButton />
                 <a className="button button-ghost" href="https://github.com/furqan-ops" target="_blank" rel="noreferrer"><Code2 /> View GitHub</a>
               </div>
               <div className="contact-links">
@@ -544,6 +709,7 @@ export default function Page() {
         </footer>
       </div>
 
+      {/* Case Study & Experience Modal */}
       <AnimatePresence>
         {(selected || attendanceOpen) && (
           <motion.div
@@ -632,6 +798,78 @@ export default function Page() {
                   </p>
                 </>
               )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* 2026 Command Palette Dialog (⌘K / Ctrl+K) */}
+      <AnimatePresence>
+        {cmdOpen && (
+          <motion.div
+            className="cmd-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setCmdOpen(false)}
+          >
+            <motion.div
+              className="cmd-modal"
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{ duration: 0.18 }}
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Command palette"
+            >
+              <div className="cmd-search-wrap">
+                <Search />
+                <input
+                  type="text"
+                  className="cmd-search-input"
+                  placeholder="Type a command or jump to section..."
+                  value={cmdSearch}
+                  onChange={(e) => setCmdSearch(e.target.value)}
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  style={{ background: 'transparent', border: 0, color: 'var(--muted)', cursor: 'pointer' }}
+                  onClick={() => setCmdOpen(false)}
+                >
+                  <X style={{ width: 16 }} />
+                </button>
+              </div>
+
+              <div className="cmd-list">
+                <div className="cmd-section-title">Quick Actions &amp; Navigation</div>
+                {filteredCmdItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className="cmd-item"
+                    onClick={item.action}
+                  >
+                    <div className="cmd-item-left">
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </div>
+                    <span className="cmd-item-hint">{item.category}</span>
+                  </button>
+                ))}
+                {filteredCmdItems.length === 0 && (
+                  <div style={{ padding: '24px', textAlign: 'center', color: 'var(--muted)', fontSize: 13 }}>
+                    No commands matching &ldquo;{cmdSearch}&rdquo;
+                  </div>
+                )}
+              </div>
+
+              <div className="cmd-footer">
+                <span>Navigate &amp; Execute</span>
+                <span>ESC to close</span>
+              </div>
             </motion.div>
           </motion.div>
         )}
