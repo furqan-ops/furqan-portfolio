@@ -24,3 +24,5 @@ __v0_jsx-dev-runtime.ts
 .snowflake/
 .design-cache/
 .v0-trash/
+.vercel
+.env*
