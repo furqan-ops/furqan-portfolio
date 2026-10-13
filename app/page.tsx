@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronRight, Circle, Download, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2 } from 'lucide-react'
+import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2 } from 'lucide-react'
 
 type Project = {
   title: string
@@ -152,7 +152,6 @@ export default function Page() {
                 <a className="button button-primary" href="#projects">View Projects <ArrowUpRight /></a>
                 <a className="button button-ghost" href="#contact">Contact Me <Mail /></a>
               </div>
-              <a className="resume-link" href="/resume.pdf"><Download /> Download Resume</a>
             </div>
 
             <div className="terminal-card" aria-label="Terminal showing an automation workflow">
@@ -366,7 +365,7 @@ export default function Page() {
               <p>Tell me where time is getting lost. I’ll help map the next step.</p>
               <div className="contact-actions">
                 <a className="button button-primary" href="mailto:furqantahir2222@gmail.com"><Mail /> Email me</a>
-                <a className="button button-ghost" href="/resume.pdf"><Download /> Download resume</a>
+                <a className="button button-ghost" href="https://github.com/furqan-ops" target="_blank" rel="noreferrer"><Code2 /> View GitHub</a>
               </div>
               <div className="contact-links">
                 <a href="tel:+923150727514"><Phone /> +92 315 0727514</a>
