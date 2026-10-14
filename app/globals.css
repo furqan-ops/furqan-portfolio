@@ -718,6 +718,297 @@ footer p { margin-top: 6px; }
   font-family: var(--font-mono);
 }
 
+/* Card Action Buttons (Live Demo & Code) */
+.card-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 22px;
+  gap: 10px;
+}
+.card-pills-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 80%, transparent);
+  color: var(--foreground);
+  transition: all .2s ease;
+}
+.card-action-btn:hover {
+  background: var(--dark);
+  color: #fff;
+  border-color: var(--dark);
+}
+.dark .card-action-btn:hover {
+  background: var(--accent);
+  color: #151515;
+  border-color: var(--accent);
+}
+.card-action-btn svg { width: 11px; height: 11px; }
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* Interactive ROI Savings Calculator */
+.roi-calculator {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 28px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 36px;
+}
+.roi-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.roi-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.roi-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.roi-val {
+  font-family: var(--font-mono);
+  color: var(--olive);
+  font-weight: 700;
+  font-size: 14px;
+}
+.roi-slider {
+  width: 100%;
+  accent-color: #8aa51d;
+  height: 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.roi-results {
+  background: color-mix(in srgb, var(--background) 70%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+.roi-metric-highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.roi-metric-highlight small {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+.roi-metric-highlight strong {
+  font-size: 44px;
+  letter-spacing: -.05em;
+  font-weight: 800;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  line-height: 1;
+  margin: 6px 0;
+}
+.roi-metric-highlight span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.roi-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.roi-sub-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.roi-sub-stat b {
+  font-size: 15px;
+  font-family: var(--font-mono);
+  color: var(--foreground);
+}
+.roi-sub-stat span {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.roi-cta {
+  width: 100%;
+}
+
+/* Before vs. After Workflow Comparison */
+.compare-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 36px;
+}
+.compare-col {
+  padding: 26px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.compare-col.before {
+  border-left: 3px solid #ef4444;
+}
+.compare-col.after {
+  border-left: 3px solid #8aa51d;
+}
+.compare-col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 16px;
+}
+.compare-col.before .compare-col-header { color: #dc2626; }
+.compare-col.after .compare-col-header { color: var(--olive); }
+.compare-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.compare-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.compare-list-item strong {
+  color: var(--foreground);
+}
+.compare-list-item svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Production SLA Monitor */
+.sla-monitor {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+}
+.sla-box {
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sla-box-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.sla-dot-green {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a7c936;
+  box-shadow: 0 0 6px #a7c936;
+}
+.sla-box strong {
+  font-size: 18px;
+  font-family: var(--font-mono);
+  color: var(--foreground);
+  font-weight: 700;
+}
+.sla-box p {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* Ask Furqan AI Assistant in Terminal */
+.terminal-ai-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.terminal-ai-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.terminal-ai-pill {
+  background: #232720;
+  border: 1px solid #383e32;
+  color: #d4ef72;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 5px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.terminal-ai-pill:hover, .terminal-ai-pill.active {
+  background: #d4ef72;
+  color: #151515;
+  border-color: #d4ef72;
+}
+.terminal-ai-reply {
+  background: #10120f;
+  border: 1px solid #282c24;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #cfd2c6;
+  font-family: var(--font-mono);
+}
+.terminal-ai-reply strong {
+  color: #85c8a6;
+}
+
 @media (max-width: 860px) {
   .bento-grid {
     grid-template-columns: 1fr;
@@ -747,6 +1038,10 @@ footer p { margin-top: 6px; }
   .project-grid, .skills-grid { grid-template-columns: 1fr; }
   .project-grid-single { max-width: none; }
   .credential-grid { grid-template-columns: 1fr; }
+  .roi-calculator { grid-template-columns: 1fr; padding: 20px; }
+  .roi-breakdown-grid { grid-template-columns: 1fr; }
+  .compare-container { grid-template-columns: 1fr; }
+  .sla-monitor { grid-template-columns: repeat(2, 1fr); }
   .contact { padding-top: 72px; padding-bottom: 76px; }
   .contact-links { flex-direction: column; gap: 16px; } 
   footer { padding: 24px 18px; flex-direction: column; gap: 20px; }
@@ -759,6 +1054,7 @@ footer p { margin-top: 6px; }
 @media (max-width: 639px) { 
   .project-thumb { height: 160px; }
   .stats-grid { grid-template-columns: 1fr; }
+  .sla-monitor { grid-template-columns: 1fr; }
 }
 
 @media (min-width: 640px) and (max-width: 960px) { 

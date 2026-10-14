@@ -2,7 +2,33 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronRight, Circle, Globe2, Mail, Moon, Phone, Sun, Workflow, X, Zap, Code2, Bot, Play, Check, Copy, Command, Search, Clock, Sparkles } from 'lucide-react'
+import {
+  ArrowUpRight,
+  ChevronRight,
+  Circle,
+  Globe2,
+  Mail,
+  Moon,
+  Phone,
+  Sun,
+  Workflow,
+  X,
+  Zap,
+  Code2,
+  Bot,
+  Play,
+  Check,
+  Copy,
+  Command,
+  Search,
+  Clock,
+  Sparkles,
+  Sliders,
+  CheckCircle2,
+  XCircle,
+  ShieldCheck,
+  Activity
+} from 'lucide-react'
 
 type Project = {
   title: string
@@ -14,6 +40,8 @@ type Project = {
   approach: string
   result: string
   metric: string
+  liveUrl?: string
+  githubUrl?: string
 }
 
 const projects: Project[] = [
@@ -26,7 +54,9 @@ const projects: Project[] = [
     problem: 'Security questionnaires slowed down enterprise sales cycles and pulled senior engineers into answering repetitive technical audits.',
     approach: 'Built a retrieval pipeline with hybrid search, source citations, confidence scoring, and a reviewer-ready UI for quick triage.',
     result: 'Answers arrive with verified context and clear escalation for low-confidence questions, reducing review overhead by 80%.',
-    metric: 'Reduced questionnaire turnaround from 3 days to under 15 minutes.'
+    metric: 'Reduced questionnaire turnaround from 3 days to under 15 minutes.',
+    liveUrl: 'https://rfp-frontend-psi.vercel.app',
+    githubUrl: 'https://github.com/furqan-ops/rfp-frontend'
   },
   {
     title: 'Apex Dental WhatsApp AI Receptionist',
@@ -37,7 +67,9 @@ const projects: Project[] = [
     problem: 'Patients needed quick answers outside office hours without adding front-desk overhead or leaving appointment slots open.',
     approach: 'Connected conversational AI triage to real-time calendar booking across WhatsApp Cloud API and a modern web portal.',
     result: 'A sub-5s first response that qualifies patient intent, answers clinic FAQs, and confirms bookings without human intervention.',
-    metric: '24/7 autonomous triage handling patient inquiries with zero front-desk wait time.'
+    metric: '24/7 autonomous triage handling patient inquiries with zero front-desk wait time.',
+    liveUrl: 'https://apex-dental-clinic-theta.vercel.app',
+    githubUrl: 'https://github.com/furqan-ops/apex-dental-clinic'
   },
   {
     title: 'Autonomous Lead Qualification Engine',
@@ -48,7 +80,9 @@ const projects: Project[] = [
     problem: 'Sales teams lacked a shared signal for which incoming leads required urgent follow-up, causing delayed responses.',
     approach: 'Engineered an automated 0–100 ICP scoring model with real-time HubSpot webhooks and immediate Slack notification triggers.',
     result: 'Every inbound contact receives instant qualification and smart AE assignment within seconds of form submission.',
-    metric: 'Achieved sub-minute speed-to-lead with 100% routing consistency across all channels.'
+    metric: 'Achieved sub-minute speed-to-lead with 100% routing consistency across all channels.',
+    liveUrl: 'https://revops-ai-revenue-automation.vercel.app',
+    githubUrl: 'https://github.com/furqan-ops/revops-ai-revenue-automation'
   },
   {
     title: 'Multi-Agent Cost Governance Dashboard',
@@ -59,7 +93,8 @@ const projects: Project[] = [
     problem: 'Agent inference costs were hard to attribute across nested sub-agents, tool executions, and redundant queries.',
     approach: 'Centralized OpenTelemetry metrics into Supabase and implemented pgvector semantic caching for repeated query intent.',
     result: 'Granular visibility into cost-per-task and significant token savings on high-volume production agent runs.',
-    metric: '40% reduction in repeat AI query costs via semantic caching.'
+    metric: '40% reduction in repeat AI query costs via semantic caching.',
+    githubUrl: 'https://github.com/furqan-ops/sentinelflow'
   },
   {
     title: 'SmartLead Engine',
@@ -70,7 +105,9 @@ const projects: Project[] = [
     problem: 'High-volume leads entered across SMS, email, and social without unified qualification or follow-up cadence.',
     approach: 'Mapped lead intent temperature into dynamic GoHighLevel workflows with automated multi-channel re-engagement triggers.',
     result: 'A seamless automated progression from cold touchpoint to booked discovery call.',
-    metric: '36-second speed-to-lead across a $36.1K active sales pipeline.'
+    metric: '36-second speed-to-lead across a $36.1K active sales pipeline.',
+    liveUrl: 'https://revops-ai-revenue-automation.vercel.app',
+    githubUrl: 'https://github.com/furqan-ops/revops-ai-revenue-automation'
   },
   {
     title: 'Multi-Agent Dining Concierge',
@@ -81,7 +118,9 @@ const projects: Project[] = [
     problem: 'Complex dining bookings require cross-checking dietary restrictions, party sizes, and live seating tables simultaneously.',
     approach: 'Orchestrated seven specialized LangGraph sub-agents to collaborate on availability, dietary safety, and booking confirmation.',
     result: 'Natural, multi-turn voice and text conversations that execute verified restaurant reservations in real time.',
-    metric: 'Orchestrates 7 specialized agents to resolve multi-criteria bookings in a single flow.'
+    metric: 'Orchestrates 7 specialized agents to resolve multi-criteria bookings in a single flow.',
+    liveUrl: 'https://multi-ai-agents-customer-support.vercel.app',
+    githubUrl: 'https://github.com/furqan-ops/Multi-AI-Agents-Customer-Support'
   },
 ]
 
@@ -112,6 +151,33 @@ const defaultLiveEvents = [
   { time: '14:20:03', tag: 'SYNC', tagClass: 'crm', text: 'Enriched via Apollo & logged to HubSpot' },
   { time: '14:20:03', tag: 'DISPATCH', tagClass: 'success', text: 'Slack alert sent to Senior AE in 0.36s' },
   { time: '14:20:04', tag: 'STATUS', tagClass: 'success', text: 'Pipeline completed · 200 OK' },
+]
+
+const aiAssistantPrompts = [
+  {
+    id: 'resume',
+    label: 'Applivity pipeline?',
+    question: 'How did you cut manual resume entry by 75% at Applivity?',
+    reply: 'Architected an automated n8n workflow listening on Google Drive uploads. It extracts candidate metadata, applies OCR parsing, and runs confidence scoring (>99% accuracy) before syncing records directly into Google Sheets across 5,000+ applicants.'
+  },
+  {
+    id: 'speed',
+    label: 'Speed-to-lead?',
+    question: 'How does your 36-second RevOps speed-to-lead pipeline work?',
+    reply: 'Inbound leads hit an n8n webhook, trigger instant ICP fit scoring (0–100), enrich firmographics via Apollo, update HubSpot lifecycle stages, and alert account executives on Slack with a pre-drafted context brief in under 40 seconds.'
+  },
+  {
+    id: 'agents',
+    label: 'AI Agent stack?',
+    question: 'What stack do you use for production AI agents?',
+    reply: 'I build with LangGraph and LangChain for stateful multi-agent graphs, FastAPI for robust API gateways, and Supabase pgvector semantic caching to reduce repeat LLM token consumption by 40%.'
+  },
+  {
+    id: 'contracts',
+    label: 'Availability?',
+    question: 'Are you available for contract or freelance engineering?',
+    reply: 'Yes! Currently open for high-impact automation and AI agent contracts. Based in Rawalpindi, Pakistan (PKT / UTC+5), with flexible overlap across US, UK, and EU business hours.'
+  }
 ]
 
 function Typewriter({ words }: { words: string[] }) {
@@ -245,16 +311,206 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
   )
 }
 
+/* 2026 Interactive ROI Savings Calculator */
+function RoiCalculator() {
+  const [teamSize, setTeamSize] = useState(6)
+  const [hoursPerWeek, setHoursPerWeek] = useState(10)
+  const [hourlyWage, setHourlyWage] = useState(45)
+
+  const annualHoursLost = teamSize * hoursPerWeek * 50
+  const annualHoursSaved = Math.round(annualHoursLost * 0.75)
+  const annualDollarsSaved = annualHoursSaved * hourlyWage
+  const speedMultiplier = 12
+
+  return (
+    <div className="roi-calculator">
+      <div className="roi-controls">
+        <div>
+          <div className="bento-top-label" style={{ marginBottom: 12 }}>
+            <Sliders style={{ width: 14, height: 14 }} />
+            <span>INTERACTIVE ROI ESTIMATOR</span>
+          </div>
+          <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
+            Calculate what manual operations cost your business
+          </h3>
+          <p style={{ color: 'var(--muted)', fontSize: 13.5, lineHeight: 1.6 }}>
+            Adjust team size, weekly manual task hours, and blended hourly compensation to model the expected annual efficiency return.
+          </p>
+        </div>
+
+        <div className="roi-slider-group">
+          <div className="roi-slider-header">
+            <span>Team members handling manual data / lead triage</span>
+            <span className="roi-val">{teamSize} {teamSize === 1 ? 'person' : 'people'}</span>
+          </div>
+          <input
+            type="range"
+            min={1}
+            max={30}
+            value={teamSize}
+            onChange={(e) => setTeamSize(Number(e.target.value))}
+            className="roi-slider"
+            aria-label="Team members handling manual tasks"
+          />
+        </div>
+
+        <div className="roi-slider-group">
+          <div className="roi-slider-header">
+            <span>Hours spent per person / week on repetitive tasks</span>
+            <span className="roi-val">{hoursPerWeek} hrs / wk</span>
+          </div>
+          <input
+            type="range"
+            min={2}
+            max={25}
+            value={hoursPerWeek}
+            onChange={(e) => setHoursPerWeek(Number(e.target.value))}
+            className="roi-slider"
+            aria-label="Hours spent per person on manual workflows"
+          />
+        </div>
+
+        <div className="roi-slider-group">
+          <div className="roi-slider-header">
+            <span>Blended hourly employee cost</span>
+            <span className="roi-val">${hourlyWage} / hr</span>
+          </div>
+          <input
+            type="range"
+            min={20}
+            max={120}
+            step={5}
+            value={hourlyWage}
+            onChange={(e) => setHourlyWage(Number(e.target.value))}
+            className="roi-slider"
+            aria-label="Blended hourly cost"
+          />
+        </div>
+      </div>
+
+      <div className="roi-results">
+        <div className="roi-metric-highlight">
+          <small>Estimated Annual Cost Savings</small>
+          <strong>${annualDollarsSaved.toLocaleString()}</strong>
+          <span>Based on a conservative 75% operational manual task reduction</span>
+        </div>
+
+        <div className="roi-breakdown-grid">
+          <div className="roi-sub-stat">
+            <b>{annualHoursSaved.toLocaleString()} hrs</b>
+            <span>Reclaimed / year</span>
+          </div>
+          <div className="roi-sub-stat">
+            <b>{speedMultiplier}x</b>
+            <span>Turnaround boost</span>
+          </div>
+          <div className="roi-sub-stat">
+            <b>&gt;99%</b>
+            <span>Data accuracy</span>
+          </div>
+        </div>
+
+        <a href="#contact" className="button button-primary roi-cta">
+          Automate Your Operations <ArrowUpRight />
+        </a>
+      </div>
+    </div>
+  )
+}
+
+/* 2026 Before vs. After Workflow Comparison */
+function BeforeAfterCompare() {
+  return (
+    <div className="compare-container">
+      <div className="compare-col before">
+        <div className="compare-col-header">
+          <XCircle />
+          <span>Before: Manual Operational Drag</span>
+        </div>
+        <div className="compare-list">
+          <div className="compare-list-item">
+            <XCircle style={{ color: '#ef4444' }} />
+            <span><strong>Disjointed CRM Data:</strong> Leads sit in spreadsheets or form inboxes for 4–12 hours before triage.</span>
+          </div>
+          <div className="compare-list-item">
+            <XCircle style={{ color: '#ef4444' }} />
+            <span><strong>Human Entry Errors:</strong> Copy-pasting applicant details or billing records leads to missing contacts and duplicates.</span>
+          </div>
+          <div className="compare-list-item">
+            <XCircle style={{ color: '#ef4444' }} />
+            <span><strong>High Engineering Distraction:</strong> Senior staff pulled into repeatedly answering enterprise security questionnaires.</span>
+          </div>
+          <div className="compare-list-item">
+            <XCircle style={{ color: '#ef4444' }} />
+            <span><strong>Unchecked AI Spend:</strong> Redundant queries and unoptimized LLM calls burning runaway API budgets.</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="compare-col after">
+        <div className="compare-col-header">
+          <CheckCircle2 />
+          <span>After: Automated Self-Healing Flow</span>
+        </div>
+        <div className="compare-list">
+          <div className="compare-list-item">
+            <CheckCircle2 style={{ color: 'var(--olive)' }} />
+            <span><strong>Sub-Minute Speed-to-Lead:</strong> Webhook triggers ICP scoring (0–100) and routes straight to AE Slack in &lt;40s.</span>
+          </div>
+          <div className="compare-list-item">
+            <CheckCircle2 style={{ color: 'var(--olive)' }} />
+            <span><strong>&gt;99% Data Accuracy:</strong> Automated extraction with confidence scoring flags unclear items for swift human triage.</span>
+          </div>
+          <div className="compare-list-item">
+            <CheckCircle2 style={{ color: 'var(--olive)' }} />
+            <span><strong>Autonomous Cited RAG:</strong> AI drafts verified RFP answers with exact source links in 15 minutes instead of 3 days.</span>
+          </div>
+          <div className="compare-list-item">
+            <CheckCircle2 style={{ color: 'var(--olive)' }} />
+            <span><strong>Semantic Cost Guardrails:</strong> pgvector semantic caching cuts repeat query costs by 40% with zero latency penalty.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* 2026 Production SLA & System Health Monitor */
+function SlaMonitor() {
+  const metrics = [
+    { title: 'Pipeline Availability', value: '99.98%', desc: 'Event-driven webhooks with dead-letter queue recovery' },
+    { title: 'Median Router Latency', value: '< 0.38s', desc: 'n8n & FastAPI end-to-end execution speed' },
+    { title: 'Extraction Precision', value: '> 99.2%', desc: 'Verified across 5,000+ candidate document parses' },
+    { title: 'LLM Cost Efficiency', value: '40% Cut', desc: 'Semantic caching on repeat vector & agent queries' },
+  ]
+
+  return (
+    <div className="sla-monitor">
+      {metrics.map((m) => (
+        <div key={m.title} className="sla-box">
+          <div className="sla-box-top">
+            <span>{m.title}</span>
+            <span className="sla-dot-green" title="Operational" />
+          </div>
+          <strong>{m.value}</strong>
+          <p>{m.desc}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function Page() {
   const [dark, setDark] = useState(false)
   const [selected, setSelected] = useState<Project | null>(null)
   const [filter, setFilter] = useState('All')
   const [attendanceOpen, setAttendanceOpen] = useState(false)
-  const [terminalTab, setTerminalTab] = useState<'code' | 'logs'>('code')
+  const [terminalTab, setTerminalTab] = useState<'code' | 'logs' | 'ask_ai'>('code')
   const [liveEventsList, setLiveEventsList] = useState(defaultLiveEvents)
   const [isSimulating, setIsSimulating] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
   const [cmdSearch, setCmdSearch] = useState('')
+  const [selectedAiPrompt, setSelectedAiPrompt] = useState(aiAssistantPrompts[0])
 
   const pktTime = usePktTime()
   const visibleProjects = filter === 'All' ? projects : projects.filter((project) => project.categories.includes(filter))
@@ -304,12 +560,16 @@ export default function Page() {
 
   const cmdItems = [
     { id: 'projects', title: 'Selected Projects & Case Studies', category: 'Navigation', icon: <Workflow />, action: () => { document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'roi', title: 'ROI / Automation Savings Calculator', category: 'Navigation', icon: <Sliders />, action: () => { document.getElementById('roi')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
     { id: 'experience', title: 'Work Experience at Applivity', category: 'Navigation', icon: <Code2 />, action: () => { document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
     { id: 'skills', title: 'Toolkit & Tech Stack', category: 'Navigation', icon: <Zap />, action: () => { document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
     { id: 'contact', title: 'Contact Information', category: 'Navigation', icon: <Mail />, action: () => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
-    { id: 'sim', title: 'Run Live Terminal Simulation', category: 'Actions', icon: <Play />, action: () => { runSimulation(); document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
+    { id: 'demo-rfp', title: 'Live Demo: Enterprise RFP Auto-Responder', category: 'Live Demos', icon: <Play />, action: () => { window.open('https://rfp-frontend-psi.vercel.app', '_blank'); setCmdOpen(false) } },
+    { id: 'demo-dental', title: 'Live Demo: Apex Dental AI Receptionist', category: 'Live Demos', icon: <Play />, action: () => { window.open('https://apex-dental-clinic-theta.vercel.app', '_blank'); setCmdOpen(false) } },
+    { id: 'demo-revops', title: 'Live Demo: Lead Qualification Engine', category: 'Live Demos', icon: <Play />, action: () => { window.open('https://revops-ai-revenue-automation.vercel.app', '_blank'); setCmdOpen(false) } },
+    { id: 'sim', title: 'Run Live Terminal Simulation', category: 'Actions', icon: <Sparkles />, action: () => { runSimulation(); document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' }); setCmdOpen(false) } },
     { id: 'copy-email', title: 'Copy Email Address', category: 'Actions', icon: <Copy />, action: () => { navigator.clipboard.writeText('furqantahir2222@gmail.com'); setCmdOpen(false) } },
-    { id: 'github', title: 'Open GitHub Profile', category: 'Actions', icon: <Code2 />, action: () => { window.open('https://github.com/furqan-ops', '_blank'); setCmdOpen(false) } },
+    { id: 'github', title: 'Open GitHub Profile (@furqan-ops)', category: 'Actions', icon: <Code2 />, action: () => { window.open('https://github.com/furqan-ops', '_blank'); setCmdOpen(false) } },
     { id: 'theme', title: 'Toggle Light / Dark Mode', category: 'Preferences', icon: <Moon />, action: () => { setDark((d) => !d); setCmdOpen(false) } },
   ]
 
@@ -330,7 +590,8 @@ export default function Page() {
               <a href="#about">About</a>
               <a href="#experience">Experience</a>
               <a href="#projects">Projects</a>
-              <a href="#skills">Skills</a>
+              <a href="#roi">ROI Calculator</a>
+              <a href="#skills">Toolkit</a>
             </div>
             <div className="nav-actions">
               <button
@@ -406,19 +667,28 @@ export default function Page() {
                     >
                       <Play /> live_events.log
                     </button>
+                    <button
+                      type="button"
+                      className={`terminal-tab-btn ${terminalTab === 'ask_ai' ? 'active' : ''}`}
+                      onClick={() => setTerminalTab('ask_ai')}
+                    >
+                      <Bot /> Ask Furqan AI
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    className="terminal-run-btn"
-                    onClick={runSimulation}
-                    disabled={isSimulating}
-                    title="Run live automation simulation"
-                  >
-                    <Sparkles /> {isSimulating ? 'Running...' : 'Run Simulation'}
-                  </button>
+                  {terminalTab === 'logs' && (
+                    <button
+                      type="button"
+                      className="terminal-run-btn"
+                      onClick={runSimulation}
+                      disabled={isSimulating}
+                      title="Run live automation simulation"
+                    >
+                      <Sparkles /> {isSimulating ? 'Running...' : 'Run Simulation'}
+                    </button>
+                  )}
                 </div>
 
-                {terminalTab === 'code' ? (
+                {terminalTab === 'code' && (
                   <div className="terminal-body">
                     <p><span className="terminal-muted">01</span> <b>@webhook.on</b>(<i>&quot;hubspot.lead_created&quot;</i>)</p>
                     <p><span className="terminal-muted">02</span> <b>async def</b> <strong>route_deal</strong>(lead: Lead):</p>
@@ -427,7 +697,9 @@ export default function Page() {
                     <p className="indent" style={{ paddingLeft: '48px' }}><span className="terminal-muted">05</span> <b>return await</b> crm.dispatch(lead, <i>&quot;ae-priority&quot;</i>)</p>
                     <p className="terminal-muted cursor">_</p>
                   </div>
-                ) : (
+                )}
+
+                {terminalTab === 'logs' && (
                   <div className="terminal-body terminal-logs">
                     {liveEventsList.map((evt, idx) => (
                       <div key={idx} className="terminal-log-row">
@@ -437,6 +709,29 @@ export default function Page() {
                       </div>
                     ))}
                     <p className="terminal-muted cursor">_</p>
+                  </div>
+                )}
+
+                {terminalTab === 'ask_ai' && (
+                  <div className="terminal-body terminal-ai-wrap">
+                    <div className="terminal-ai-prompts">
+                      {aiAssistantPrompts.map((p) => (
+                        <button
+                          key={p.id}
+                          type="button"
+                          className={`terminal-ai-pill ${selectedAiPrompt.id === p.id ? 'active' : ''}`}
+                          onClick={() => setSelectedAiPrompt(p)}
+                        >
+                          {p.label}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="terminal-ai-reply">
+                      <p style={{ color: '#8aa51d', marginBottom: 6, fontWeight: 600 }}>
+                        &gt; {selectedAiPrompt.question}
+                      </p>
+                      <p>{selectedAiPrompt.reply}</p>
+                    </div>
                   </div>
                 )}
 
@@ -556,7 +851,7 @@ export default function Page() {
                   <div className="section-kicker">03 / Selected work</div>
                   <h2>Systems that<br /><span>do the work.</span></h2>
                 </div>
-                <p>Practical automation, built around the outcome first.</p>
+                <p>Practical automation, built around the outcome first. Inspect live demos or browse GitHub source code.</p>
               </div>
             </Reveal>
 
@@ -613,19 +908,66 @@ export default function Page() {
                         <span key={tag}>{tag}</span>
                       ))}
                     </div>
-                    <button className="text-link" onClick={(e) => { e.stopPropagation(); setSelected(project) }}>
-                      View case study <ChevronRight />
-                    </button>
+
+                    {/* Direct Live Demo & GitHub pills */}
+                    <div className="card-actions-row">
+                      <div className="card-pills-wrap">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="card-action-btn live"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Play style={{ width: 11, height: 11 }} /> Live Demo
+                          </a>
+                        )}
+                        {project.githubUrl && (
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="card-action-btn github"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Code2 style={{ width: 11, height: 11 }} /> Code
+                          </a>
+                        )}
+                      </div>
+                      <button className="text-link" onClick={(e) => { e.stopPropagation(); setSelected(project) }}>
+                        Case study <ChevronRight />
+                      </button>
+                    </div>
                   </article>
                 </Reveal>
               ))}
             </div>
           </section>
 
+          {/* 2026 Interactive ROI Savings Calculator & Before/After */}
+          <section id="roi" className="section-pad section-line">
+            <Reveal>
+              <div className="section-kicker">04 / Value &amp; ROI</div>
+              <h2>Tangible return on<br /><span>system investment.</span></h2>
+              <p style={{ color: 'var(--muted)', maxWidth: 540, marginTop: 8, fontSize: 15 }}>
+                Automation isn&apos;t just code—it is operational capital that frees high-value employees to focus on revenue-generating work.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <RoiCalculator />
+            </Reveal>
+
+            <Reveal delay={0.14}>
+              <BeforeAfterCompare />
+            </Reveal>
+          </section>
+
           <section className="section-pad credentials section-line">
             <div>
               <Reveal>
-                <div className="section-kicker">04 / Credentials</div>
+                <div className="section-kicker">05 / Credentials</div>
                 <h2>Built on a solid<br /><span>foundation.</span></h2>
               </Reveal>
             </div>
@@ -649,14 +991,23 @@ export default function Page() {
                 <p>International Islamic University, Islamabad</p>
                 <span>2019 — 2024</span>
               </div>
+
+              {/* 2026 Production SLA Monitor */}
+              <div style={{ marginTop: 24 }}>
+                <div className="bento-top-label" style={{ marginBottom: 12 }}>
+                  <Activity style={{ width: 13, height: 13 }} />
+                  <span>PRODUCTION BENCHMARKS &amp; SLA</span>
+                </div>
+                <SlaMonitor />
+              </div>
             </div>
           </section>
 
           <section id="skills" className="section-pad section-line">
             <Reveal>
-              <div className="section-kicker">05 / Toolkit</div>
+              <div className="section-kicker">06 / Toolkit</div>
               <h2 className="skills-title">The stack behind<br /><span>the systems.</span></h2>
-              <p className="skills-intro">Tools I use daily to build and ship automation.</p>
+              <p className="skills-intro">Tools I use daily to build, monitor, and scale automated infrastructure.</p>
             </Reveal>
             <div className="skills-grid">
               {skills.map(([title, ...items], i) => (
@@ -681,7 +1032,7 @@ export default function Page() {
 
           <section id="contact" className="contact section-pad">
             <Reveal>
-              <div className="section-kicker">06 / Contact</div>
+              <div className="section-kicker">07 / Contact</div>
               <h2>Have a workflow<br /><em>worth fixing?</em></h2>
               <p>Tell me where time is getting lost. I’ll help map the next step.</p>
               <div className="contact-actions">
@@ -781,6 +1132,22 @@ export default function Page() {
                       <span key={tag}>{tag}</span>
                     ))}
                   </div>
+
+                  {/* Direct Action Links in Modal */}
+                  {(selected.liveUrl || selected.githubUrl) && (
+                    <div className="modal-actions">
+                      {selected.liveUrl && (
+                        <a href={selected.liveUrl} target="_blank" rel="noreferrer" className="button button-primary">
+                          <ArrowUpRight /> Launch Live Demo
+                        </a>
+                      )}
+                      {selected.githubUrl && (
+                        <a href={selected.githubUrl} target="_blank" rel="noreferrer" className="button button-ghost">
+                          <Code2 /> View Source Code
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
