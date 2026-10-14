@@ -732,6 +732,18 @@ footer p { margin-top: 6px; }
   align-items: center;
   gap: 6px;
 }
+.card-actions-row .text-link {
+  margin-top: 0;
+  padding-top: 0;
+  color: var(--olive);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.card-actions-row .text-link:hover {
+  color: var(--foreground);
+}
+
 .card-action-btn {
   display: inline-flex;
   align-items: center;

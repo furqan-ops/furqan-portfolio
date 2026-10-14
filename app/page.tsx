@@ -909,20 +909,9 @@ export default function Page() {
                       ))}
                     </div>
 
-                    {/* Direct Live Demo & GitHub pills */}
+                    {/* Direct Live Link & GitHub Actions */}
                     <div className="card-actions-row">
                       <div className="card-pills-wrap">
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="card-action-btn live"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <Play style={{ width: 11, height: 11 }} /> Live Demo
-                          </a>
-                        )}
                         {project.githubUrl && (
                           <a
                             href={project.githubUrl}
@@ -931,13 +920,31 @@ export default function Page() {
                             className="card-action-btn github"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            <Code2 style={{ width: 11, height: 11 }} /> Code
+                            <Code2 style={{ width: 11, height: 11 }} /> GitHub
                           </a>
                         )}
                       </div>
-                      <button className="text-link" onClick={(e) => { e.stopPropagation(); setSelected(project) }}>
-                        Case study <ChevronRight />
-                      </button>
+                      {project.liveUrl ? (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-link"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Live Link <ArrowUpRight style={{ width: 14, height: 14 }} />
+                        </a>
+                      ) : (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-link"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          View Code <ArrowUpRight style={{ width: 14, height: 14 }} />
+                        </a>
+                      )}
                     </div>
                   </article>
                 </Reveal>
