@@ -107,7 +107,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
                       : 'text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--surface-hover)]'
                   }`}
                 >
-                  <span className="opacity-50 text-[10px]">{sec.number}</span>
+                  <span className="opacity-60 text-[10px]">{sec.number}</span>
                   <span>{sec.label}</span>
                 </a>
               )
@@ -119,7 +119,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
             {/* Quick ⌘K Trigger */}
             <button
               onClick={onOpenCommandPalette}
-              aria-label="Open command palette (Ctrl+K or ⌘K)"
+              aria-label="Menu command palette"
               className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--border-strong)] transition-all text-xs font-mono shadow-2xs"
             >
               <Command className="w-3.5 h-3.5" />

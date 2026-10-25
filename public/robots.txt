@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://furqan-portfolio-brown-one.vercel.app/sitemap.xml

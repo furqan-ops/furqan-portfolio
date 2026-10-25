@@ -1,7 +1,7 @@
 'use client'
 
 import { portfolioContent } from '@/lib/content'
-import { Server, Table2, Layers, CheckCircle } from 'lucide-react'
+import { CheckCircle } from 'lucide-react'
 
 export function SystemsSection() {
   const { tools } = portfolioContent
@@ -17,7 +17,9 @@ export function SystemsSection() {
               04 / Operational Systems & Tools
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
-            <span className="font-mono text-xs text-[var(--muted)]">Structured Systems Ledger</span>
+            <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
+              Structured Systems Ledger
+            </h2>
           </div>
           <span className="font-mono text-[11px] text-[var(--muted)]">
             Categorized Index

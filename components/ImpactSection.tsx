@@ -9,9 +9,7 @@ import {
   Clock,
   BarChart3,
   CheckCircle2,
-  ArrowRight,
-  ShieldAlert,
-  Sparkles
+  ArrowRight
 } from 'lucide-react'
 
 const stepIcons: { [key: string]: React.ReactNode } = {
@@ -77,7 +75,9 @@ export function ImpactSection() {
               02 / Impact Architecture
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
-            <span className="font-mono text-xs text-[var(--muted)]">Day-in-the-Job Process Cycle</span>
+            <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
+              Day-in-the-Job Process Cycle
+            </h2>
           </div>
           <span className="hidden sm:inline font-mono text-[11px] text-[var(--muted)]">
             Click steps to inspect source duties

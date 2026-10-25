@@ -8,10 +8,7 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
-  CheckCircle2,
-  TrendingUp,
-  Award,
-  Layers
+  TrendingUp
 } from 'lucide-react'
 
 export function ExperienceSection() {
@@ -62,9 +59,9 @@ export function ExperienceSection() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[var(--border)]">
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-serif text-2xl font-bold text-[var(--foreground)]">
+                <h2 className="font-serif text-2xl font-bold text-[var(--foreground)]">
                   {experience.currentRole}
-                </h3>
+                </h2>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
                   Current
                 </span>
@@ -119,9 +116,9 @@ export function ExperienceSection() {
                       </span>
                     </div>
 
-                    <div className="font-serif font-bold text-base text-[var(--foreground)]">
+                    <h3 className="font-serif font-bold text-base text-[var(--foreground)]">
                       {stage.role}
-                    </div>
+                    </h3>
 
                     <p className="text-xs font-sans text-[var(--muted)] mt-1.5 leading-snug">
                       {stage.highlight}

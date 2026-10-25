@@ -76,9 +76,9 @@ export function ContactSection() {
             
             {/* Left side: Context & Availability */}
             <div className="lg:col-span-6 space-y-5">
-              <h3 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)]">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)]">
                 Let&apos;s discuss operations, reporting, or executive support.
-              </h3>
+              </h2>
               
               <p className="text-sm sm:text-base text-[var(--muted)] font-sans leading-relaxed">
                 Available for full-time HR operations, office administration, and executive assistant opportunities. Fully equipped for dedicated remote collaboration across US Eastern Time (EST) and local business hours.

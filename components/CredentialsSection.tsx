@@ -20,7 +20,9 @@ export function CredentialsSection() {
               05 / Credentials & Education
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
-            <span className="font-mono text-xs text-[var(--muted)]">Academic & Professional Ledger</span>
+            <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
+              Academic & Professional Ledger
+            </h2>
           </div>
           <span className="font-mono text-[11px] text-[var(--muted)]">
             Verified Records
@@ -44,9 +46,9 @@ export function CredentialsSection() {
                 className="p-5 rounded-lg border border-[var(--border)] bg-[var(--surface)] space-y-2"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="font-serif text-lg font-bold text-[var(--foreground)]">
+                  <h4 className="font-serif text-lg font-bold text-[var(--foreground)]">
                     {item.title}
-                  </div>
+                  </h4>
                   <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-[var(--background)] border border-[var(--border)] text-[var(--muted)] shrink-0">
                     {item.year}
                   </span>
@@ -90,9 +92,9 @@ export function CredentialsSection() {
                 >
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-serif font-bold text-sm sm:text-base text-[var(--foreground)]">
+                      <h4 className="font-serif font-bold text-sm sm:text-base text-[var(--foreground)]">
                         {cert.title}
-                      </span>
+                      </h4>
                     </div>
                     <div className="text-xs font-mono text-[var(--muted)]">
                       Issuing Body: <strong className="text-[var(--accent)] font-medium">{cert.issuer}</strong>
