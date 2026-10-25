@@ -59,7 +59,7 @@ export function Hero() {
         {/* Section Index Marker */}
         <div className="flex items-center gap-2 mb-6">
           <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-            01 / Ledger Overview
+            01 / About
           </span>
           <span className="h-px w-12 bg-[var(--border-strong)]" />
           <span className="font-mono text-xs text-[var(--muted)]">Rawalpindi, Pakistan</span>
@@ -68,7 +68,7 @@ export function Hero() {
         {/* Hero Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Left Column: Name & Editorial Positioning */}
+          {/* Left Column: Name & Direct Summary */}
           <div className="lg:col-span-7 space-y-6">
             
             <div className="space-y-2">
@@ -80,18 +80,21 @@ export function Hero() {
               </p>
             </div>
 
-            {/* Verbatim CV Summary */}
+            {/* Direct Summary */}
             <p className="text-base sm:text-lg text-[var(--foreground)]/90 leading-relaxed max-w-2xl font-sans">
               {portfolioContent.personal.summary}
             </p>
 
-            {/* Editorial Positioning Note */}
-            <div className="p-4 rounded-md border border-[var(--border)] bg-[var(--surface)] text-xs sm:text-sm font-mono text-[var(--muted)] flex items-start gap-3">
-              <span className="w-2 h-2 rounded-full bg-[var(--accent)] mt-1.5 shrink-0 animate-pulse" />
-              <div>
-                <strong className="text-[var(--foreground)]">Operating Philosophy: </strong>
-                {portfolioContent.personal.positioning}
-              </div>
+            {/* Quick Fact Strip */}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs font-mono text-[var(--muted)]">
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span>Applivity, Islamabad (May 2024 – Present)</span>
+              </span>
+              <span>&bull;</span>
+              <span>ERPNext &amp; Frappe HR</span>
+              <span>&bull;</span>
+              <span>Advanced Excel</span>
             </div>
 
             {/* Primary Action Buttons */}
@@ -102,35 +105,35 @@ export function Hero() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[var(--accent)] text-white text-xs sm:text-sm font-mono font-medium hover:bg-[var(--accent-hover)] transition-all shadow-xs"
               >
                 <FileText className="w-4 h-4" />
-                <span>Download Official CV (PDF)</span>
+                <span>Download CV (PDF)</span>
               </a>
 
               <a
-                href={`mailto:${portfolioContent.personal.email}?subject=Inquiry:%20HR%20Operations%20%26%20Administration%20-%20Muhammad%20Furqan%20Tahir`}
+                href={`mailto:${portfolioContent.personal.email}?subject=HR%20Operations%20Inquiry%20-%20Muhammad%20Furqan%20Tahir`}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded border border-[var(--border-strong)] bg-[var(--surface)] text-xs sm:text-sm font-mono font-medium hover:bg-[var(--surface-hover)] transition-all"
               >
                 <Mail className="w-4 h-4 text-[var(--accent)]" />
-                <span>Email Muhammad</span>
+                <span>Email Me</span>
               </a>
 
               <a
-                href="#impact"
-                className="inline-flex items-center gap-1.5 px-3 py-2.5 text-xs sm:text-sm font-mono text-[var(--muted)] hover:text-[var(--foreground)] transition-colors ml-auto sm:ml-0"
+                href="#experience"
+                className="inline-flex items-center gap-1.5 px-3 py-2.5 text-xs sm:text-sm font-mono text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
               >
-                <span>View Operations Day</span>
+                <span>View Experience</span>
                 <ArrowDown className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
 
-          {/* Right Column: 3 Headline Metrics with Tooltip Inspector */}
+          {/* Right Column: 3 Headline Metrics */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             <div className="flex items-center justify-between pb-2 border-b border-[var(--border)]">
               <span className="font-mono text-xs text-[var(--muted)] uppercase tracking-wider">
-                Audited Operational Metrics
+                Key Operations Metrics
               </span>
-              <span className="font-mono text-[11px] text-[var(--accent)] flex items-center gap-1">
-                <Info className="w-3 h-3" /> Hover for CV source
+              <span className="font-mono text-[11px] text-[var(--muted)]">
+                Applivity &bull; Verified
               </span>
             </div>
 
@@ -147,20 +150,17 @@ export function Hero() {
                     onFocus={() => setActiveHoverMetric(m)}
                     onBlur={() => setActiveHoverMetric(null)}
                     tabIndex={0}
-                    className={`p-5 rounded-lg border transition-all cursor-pointer relative ${
+                    className={`p-4 sm:p-5 rounded-lg border transition-all cursor-pointer relative ${
                       isHovered
-                        ? 'border-[var(--accent)] bg-[var(--surface-hover)] shadow-md ring-1 ring-[var(--accent)]/30'
+                        ? 'border-[var(--accent)] bg-[var(--surface-hover)] shadow-xs ring-1 ring-[var(--accent)]/30'
                         : 'border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)]'
                     }`}
                   >
                     <div className="flex items-baseline justify-between">
-                      <div className="font-mono text-4xl sm:text-5xl font-bold tracking-tight text-[var(--foreground)] tabular-nums">
+                      <div className="font-mono text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)] tabular-nums">
                         {currentCount}
                         <span className="text-[var(--accent)]">{m.suffix}</span>
                       </div>
-                      <span className="font-mono text-[10px] tracking-wider uppercase text-[var(--muted)] px-2 py-0.5 rounded bg-[var(--background)] border border-[var(--border)]">
-                        Verified Metric
-                      </span>
                     </div>
 
                     <div className="mt-2">
@@ -176,26 +176,13 @@ export function Hero() {
               })}
             </div>
 
-            {/* Dynamic CV Source Inspection Card on Hover */}
-            <div
-              className={`p-4 rounded-md border text-xs font-mono transition-all duration-200 ${
-                activeHoverMetric
-                  ? 'border-[var(--accent)] bg-[var(--accent-light)] text-[var(--foreground)] opacity-100 translate-y-0'
-                  : 'border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] opacity-70'
-              }`}
-            >
-              <div className="flex items-center gap-1.5 font-bold mb-1 text-[var(--accent)] text-[11px] uppercase tracking-wider">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>
-                  {activeHoverMetric ? `CV Source: ${activeHoverMetric.label}` : 'Metric Verification'}
-                </span>
+            {/* Context from CV */}
+            {activeHoverMetric && (
+              <div className="p-3 rounded border border-[var(--accent)] bg-[var(--accent-light)] text-xs font-mono text-[var(--foreground)] animate-in fade-in duration-100">
+                <span className="font-bold text-[var(--accent)] uppercase mr-1">CV Detail:</span>
+                <span className="font-sans">{activeHoverMetric.sourceBullet}</span>
               </div>
-              <p className="leading-relaxed font-sans text-xs">
-                {activeHoverMetric
-                  ? `"${activeHoverMetric.sourceBullet}"`
-                  : 'Hover over any metric box above to read the exact verified line item from Muhammad Furqan Tahir\'s CV.'}
-              </p>
-            </div>
+            )}
 
           </div>
 

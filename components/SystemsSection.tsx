@@ -14,20 +14,20 @@ export function SystemsSection() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-              04 / Operational Systems & Tools
+              04 / Tools &amp; Systems
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
             <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
-              Structured Systems Ledger
+              Software Stack
             </h2>
           </div>
           <span className="font-mono text-[11px] text-[var(--muted)]">
-            Categorized Index
+            Hands-on Experience
           </span>
         </div>
 
         {/* Grouped Table-like Ledger List */}
-        <div className="space-y-8">
+        <div className="space-y-6">
           {tools.map((group, groupIdx) => (
             <div
               key={group.category}
@@ -53,20 +53,17 @@ export function SystemsSection() {
                 {group.items.map((tool) => (
                   <div
                     key={tool.name}
-                    className="p-4 sm:px-6 sm:py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[var(--surface-hover)]/60 transition-colors"
+                    className="p-4 sm:px-6 sm:py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[var(--surface-hover)]/60 transition-colors"
                   >
-                    {/* Tool Name & Category */}
-                    <div className="sm:w-1/4">
+                    {/* Tool Name */}
+                    <div className="sm:w-1/3">
                       <div className="font-mono text-sm font-bold text-[var(--foreground)]">
                         {tool.name}
-                      </div>
-                      <div className="text-[11px] font-mono text-[var(--accent)] mt-0.5">
-                        {tool.proficiency}
                       </div>
                     </div>
 
                     {/* Operational Use Case */}
-                    <div className="sm:w-3/4 flex items-center justify-between gap-4">
+                    <div className="sm:w-2/3 flex items-center justify-between gap-4">
                       <p className="text-xs sm:text-sm font-sans text-[var(--foreground)]/85 leading-relaxed">
                         {tool.useCase}
                       </p>

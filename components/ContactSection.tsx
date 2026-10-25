@@ -60,13 +60,13 @@ export function ContactSection() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-              06 / Direct Contact
+              06 / Contact
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
-            <span className="font-mono text-xs text-[var(--muted)]">Verified Channels</span>
+            <span className="font-mono text-xs text-[var(--muted)]">Rawalpindi, Pakistan</span>
           </div>
-          <span className="font-mono text-[11px] text-[var(--accent)] font-semibold">
-            Response &le; 24h
+          <span className="font-mono text-[11px] text-[var(--muted)]">
+            Open to Opportunities
           </span>
         </div>
 
@@ -77,29 +77,25 @@ export function ContactSection() {
             {/* Left side: Context & Availability */}
             <div className="lg:col-span-6 space-y-5">
               <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-tight text-[var(--foreground)]">
-                Let&apos;s discuss operations, reporting, or executive support.
+                Get in Touch
               </h2>
               
               <p className="text-sm sm:text-base text-[var(--muted)] font-sans leading-relaxed">
-                Available for full-time HR operations, office administration, and executive assistant opportunities. Fully equipped for dedicated remote collaboration across US Eastern Time (EST) and local business hours.
+                Open to HR operations, payroll administration, and executive support opportunities. Feel free to reach out via email or LinkedIn.
               </p>
 
               <div className="p-4 rounded border border-[var(--border)] bg-[var(--background)] space-y-2 text-xs font-mono">
                 <div className="flex items-center gap-2 text-[var(--foreground)]">
                   <MapPin className="w-4 h-4 text-[var(--accent)] shrink-0" />
-                  <span>Based in {portfolioContent.personal.location}</span>
+                  <span>Location: {portfolioContent.personal.location}</span>
                 </div>
                 <div className="flex items-center gap-2 text-[var(--foreground)]">
                   <Clock className="w-4 h-4 text-[var(--accent)] shrink-0" />
-                  <span>Working Hours: US Eastern Time (EST) &bull; Immediate Availability</span>
-                </div>
-                <div className="flex items-center gap-2 text-[var(--muted)]">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                  <span>Dedicated home office with primary fiber &amp; mobile backup</span>
+                  <span>Current: HR Operations Specialist at Applivity</span>
                 </div>
               </div>
 
-              {/* Download CV Large Button */}
+              {/* Download CV Button */}
               <div className="pt-2">
                 <a
                   href={portfolioContent.personal.cvUrl}
@@ -107,8 +103,7 @@ export function ContactSection() {
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded bg-[var(--accent)] text-white text-sm font-mono font-medium hover:bg-[var(--accent-hover)] transition-all shadow-xs"
                 >
                   <FileText className="w-4 h-4" />
-                  <span>Download Official CV (PDF)</span>
-                  <span className="text-[10px] opacity-80 pl-1">1-Page</span>
+                  <span>Download CV (PDF)</span>
                 </a>
               </div>
             </div>
@@ -152,11 +147,11 @@ export function ContactSection() {
                 </div>
               </div>
 
-              {/* Phone Control (Click-to-Copy ONLY per instructions) */}
+              {/* Phone Control (Click-to-Copy) */}
               <div className="p-4 sm:p-5 rounded-lg border border-[var(--border)] bg-[var(--background)] space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)]">
-                  <span className="uppercase tracking-wider">Direct Phone / WhatsApp</span>
-                  <span className="text-[var(--accent)] font-medium">Click-to-Copy Control</span>
+                  <span className="uppercase tracking-wider">Phone / WhatsApp</span>
+                  <span className="text-[var(--muted)]">Click to copy</span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
@@ -173,27 +168,23 @@ export function ContactSection() {
                     {copiedPhone ? (
                       <>
                         <Check className="w-3.5 h-3.5 text-[var(--success)]" />
-                        <span className="text-[var(--success)] font-medium">Copied!</span>
+                        <span className="text-[var(--success)] font-medium">Copied</span>
                       </>
                     ) : (
                       <>
                         <Copy className="w-3.5 h-3.5 text-[var(--muted)]" />
-                        <span>Copy Number</span>
+                        <span>Copy</span>
                       </>
                     )}
                   </button>
-                </div>
-
-                <div className="text-[11px] font-mono text-[var(--muted)] pt-1">
-                  * Telephone link is protected as a copy control to prevent unintended dialing.
                 </div>
               </div>
 
               {/* LinkedIn Control */}
               <div className="p-4 sm:p-5 rounded-lg border border-[var(--border)] bg-[var(--background)] space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)]">
-                  <span className="uppercase tracking-wider">Professional Network</span>
-                  <span>Verified Profile</span>
+                  <span className="uppercase tracking-wider">LinkedIn</span>
+                  <span>Profile</span>
                 </div>
 
                 <div className="flex items-center justify-between gap-3 pt-1">
@@ -213,7 +204,7 @@ export function ContactSection() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 px-3 py-1.5 rounded border border-[var(--border)] bg-[var(--surface)] text-xs font-mono hover:bg-[var(--surface-hover)] transition-all shrink-0"
                   >
-                    <span>Visit</span>
+                    <span>Open</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-[var(--muted)]" />
                   </a>
                 </div>

@@ -72,23 +72,23 @@ export function ImpactSection() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-              02 / Impact Architecture
+              02 / Workflow
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
             <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
-              Day-in-the-Job Process Cycle
+              HR Operations Workflow
             </h2>
           </div>
           <span className="hidden sm:inline font-mono text-[11px] text-[var(--muted)]">
-            Click steps to inspect source duties
+            Click to view duty
           </span>
         </div>
 
         {/* Process Diagram: Horizontal Strip */}
         <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-6 mb-8">
           <div className="text-xs font-mono text-[var(--muted)] uppercase tracking-wider mb-4 flex items-center justify-between">
-            <span>Core Operational Flow</span>
-            <span className="text-[var(--accent)] font-semibold">End-to-End People Cycle</span>
+            <span>Operations Lifecycle</span>
+            <span className="text-[var(--accent)] font-semibold">Applivity, Islamabad</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -101,7 +101,7 @@ export function ImpactSection() {
                   onClick={() => setSelectedStep(step)}
                   className={`flex flex-col text-left p-3.5 rounded-md border transition-all relative ${
                     isSelected
-                      ? 'border-[var(--accent)] bg-[var(--background)] shadow-sm ring-1 ring-[var(--accent)]/30'
+                      ? 'border-[var(--accent)] bg-[var(--background)] shadow-2xs ring-1 ring-[var(--accent)]/30'
                       : 'border-[var(--border)] bg-[var(--surface-hover)]/40 hover:border-[var(--border-strong)]'
                   }`}
                 >
@@ -136,8 +136,8 @@ export function ImpactSection() {
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[var(--accent)] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[var(--foreground)] uppercase tracking-wider mr-2">
-                    Step {selectedStep.step} Linked CV Duty:
+                  <strong className="text-[var(--foreground)] mr-1">
+                    Responsibility:
                   </strong>
                   <span className="font-sans text-[var(--foreground)]/90">{linkedBullet.text}</span>
                 </div>
@@ -146,14 +146,14 @@ export function ImpactSection() {
                 href="#experience"
                 className="shrink-0 text-[var(--accent)] hover:underline flex items-center gap-1 font-semibold"
               >
-                <span>View Timeline</span>
+                <span>Experience</span>
                 <ArrowRight className="w-3 h-3" />
               </a>
             </div>
           )}
         </div>
 
-        {/* Creative Micro-Animation: "Payroll Run" 45-Row Micro-Ledger */}
+        {/* "Payroll Run" 45-Row Micro-Ledger */}
         <div
           ref={payrollLedgerRef}
           className="border border-[var(--border)] rounded-lg bg-[var(--surface)] overflow-hidden"
@@ -161,23 +161,23 @@ export function ImpactSection() {
           {/* Header of Payroll Ledger */}
           <div className="px-5 py-4 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-3 bg-[var(--background)]">
             <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="w-3 h-3 rounded-full bg-emerald-500" />
               <div>
                 <div className="font-mono text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">
-                  Decorative Micro-Ledger: Monthly Payroll Run
+                  Monthly Payroll Processing (45 Staff)
                 </div>
                 <div className="font-mono text-[11px] text-[var(--muted)]">
-                  Simulating end-to-end reconciliation across 45 employee records
+                  Reconciled in ERPNext &amp; Excel with zero disbursement errors
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-3 font-mono text-xs">
               <div className="px-2.5 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground)]">
-                Status: <strong className="text-[var(--accent)]">{payrollRunProgress === 45 ? '100% RECONCILED' : `PROCESSING (${payrollRunProgress}/45)`}</strong>
+                Status: <strong className="text-[var(--accent)]">{payrollRunProgress === 45 ? '45/45 COMPLETED' : `PROCESSING (${payrollRunProgress}/45)`}</strong>
               </div>
               <div className="text-[var(--muted)] text-[11px] hidden sm:inline">
-                ERPNext &bull; Zero Discrepancy
+                ERPNext &bull; Excel
               </div>
             </div>
           </div>
@@ -221,8 +221,8 @@ export function ImpactSection() {
 
             {/* Footnote note */}
             <div className="mt-4 pt-3 border-t border-[var(--border)] flex flex-wrap items-center justify-between text-[11px] font-mono text-[var(--muted)]">
-              <span>* Decorative visualization demonstrating high-volume administrative record handling.</span>
-              <span className="text-[var(--accent)] font-medium">Source: Applivity Payroll Registry (45 staff)</span>
+              <span>Monthly payroll record reconciliation for 45 employees at Applivity.</span>
+              <span className="text-[var(--accent)] font-medium">ERPNext &bull; Frappe HR</span>
             </div>
           </div>
         </div>

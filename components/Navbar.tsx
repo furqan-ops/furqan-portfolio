@@ -88,7 +88,7 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
                 {portfolioContent.personal.name}
               </span>
               <span className="font-mono text-[10px] tracking-wider uppercase text-[var(--muted)] mt-0.5">
-                Operations Ledger
+                HR Operations &amp; Admin
               </span>
             </div>
           </a>

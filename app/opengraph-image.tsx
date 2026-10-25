@@ -75,7 +75,7 @@ export default async function Image() {
                 color: '#66635D',
               }}
             >
-              Operations Ledger &bull; Portfolio
+              HR Operations &bull; Portfolio
             </div>
           </div>
           <div
@@ -86,7 +86,7 @@ export default async function Image() {
               fontWeight: 600,
             }}
           >
-            Rawalpindi, PK &bull; Available US EST
+            Rawalpindi, Pakistan
           </div>
         </div>
 
@@ -123,7 +123,7 @@ export default async function Image() {
               fontFamily: 'sans-serif',
             }}
           >
-            Managing people operations, executive reporting, and digital administration with precision, data integrity, and zero tolerance for error.
+            Hands-on HR operations, payroll processing (45 staff), attendance management, and ERPNext administration.
           </div>
         </div>
 

@@ -30,7 +30,7 @@ export function Footer() {
 
           {/* Center: System notice */}
           <div className="font-mono text-xs text-[var(--muted)]">
-            <span>Operations Ledger &bull; Built with Next.js, TypeScript &amp; Tailwind CSS</span>
+            <span>HR Operations &amp; Administration Portfolio</span>
           </div>
 
           {/* Right: Back to top button */}
@@ -46,10 +46,10 @@ export function Footer() {
 
         <div className="mt-8 pt-6 border-t border-[var(--border)]/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-[var(--muted)]">
           <div>
-            &copy; {new Date().getFullYear()} {portfolioContent.personal.name}. All verified records audit-ready.
+            &copy; {new Date().getFullYear()} {portfolioContent.personal.name}. Rawalpindi, Pakistan.
           </div>
           <div>
-            Timezone: Rawalpindi, PK (UTC+5) &bull; Synchronized for US EST
+            Timezone: PKT (UTC+5)
           </div>
         </div>
       </div>

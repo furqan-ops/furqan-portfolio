@@ -44,10 +44,10 @@ export function ExperienceSection() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-              03 / Professional Experience
+              03 / Experience
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
-            <span className="font-mono text-xs text-[var(--muted)]">Applivity, Islamabad</span>
+            <span className="font-mono text-xs text-[var(--muted)]">Applivity &bull; Islamabad</span>
           </div>
           <span className="font-mono text-[11px] text-[var(--accent)] font-semibold">
             {experience.period}
@@ -63,7 +63,7 @@ export function ExperienceSection() {
                   {experience.currentRole}
                 </h2>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-                  Current
+                  Current Role
                 </span>
               </div>
               <div className="flex items-center gap-3 text-xs font-mono text-[var(--muted)] mt-1">
@@ -83,14 +83,14 @@ export function ExperienceSection() {
 
             <div className="flex items-center gap-2 text-xs font-mono text-[var(--muted)] bg-[var(--background)] px-3 py-1.5 rounded border border-[var(--border)]">
               <TrendingUp className="w-4 h-4 text-[var(--accent)]" />
-              <span>3x Promotion Pathway</span>
+              <span>Promoted from Intern → Recruiter</span>
             </div>
           </div>
 
           {/* Visual Step-by-Step Promotion Track */}
           <div className="mb-6">
             <div className="text-xs font-mono text-[var(--muted)] uppercase tracking-wider mb-4">
-              Career Growth & Advancement Path
+              Progression at Applivity
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
@@ -101,12 +101,12 @@ export function ExperienceSection() {
                     key={stage.role}
                     className={`p-4 rounded-md border text-left relative transition-all ${
                       isCurrent
-                        ? 'border-[var(--accent)] bg-[var(--accent-light)] shadow-xs ring-1 ring-[var(--accent)]/30'
+                        ? 'border-[var(--accent)] bg-[var(--accent-light)] shadow-2xs ring-1 ring-[var(--accent)]/30'
                         : 'border-[var(--border)] bg-[var(--background)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2 font-mono text-[11px]">
-                      <span className="text-[var(--muted)]">Stage 0{idx + 1}</span>
+                      <span className="text-[var(--muted)]">Role 0{idx + 1}</span>
                       <span className={`px-1.5 py-0.5 rounded text-[10px] font-semibold ${
                         isCurrent
                           ? 'bg-[var(--accent)] text-white'

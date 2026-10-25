@@ -17,15 +17,15 @@ export function CredentialsSection() {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
             <span className="font-mono text-xs font-bold text-[var(--accent)] tracking-widest uppercase">
-              05 / Credentials & Education
+              05 / Education &amp; Certifications
             </span>
             <span className="h-px w-12 bg-[var(--border-strong)]" />
             <h2 className="font-mono text-xs text-[var(--muted)] font-normal m-0 inline">
-              Academic & Professional Ledger
+              Credentials
             </h2>
           </div>
           <span className="font-mono text-[11px] text-[var(--muted)]">
-            Verified Records
+            Verified
           </span>
         </div>
 
@@ -59,17 +59,12 @@ export function CredentialsSection() {
                 </div>
 
                 {item.gradeOrDetail && (
-                  <p className="text-xs font-sans text-[var(--muted)] leading-relaxed pt-1 border-t border-[var(--border)]/60">
+                  <p className="text-xs font-mono text-[var(--muted)] pt-1 border-t border-[var(--border)]/60">
                     {item.gradeOrDetail}
                   </p>
                 )}
               </div>
             ))}
-
-            <div className="p-4 rounded border border-[var(--border)] bg-[var(--background)] text-xs font-mono text-[var(--muted)] leading-relaxed">
-              <strong className="text-[var(--foreground)]">Engineering Foundation: </strong>
-              BSc Software Engineering provides rigorous algorithmic thinking, database structure proficiency, and quick adoption of enterprise software platforms.
-            </div>
           </div>
 
           {/* Certifications Ledger Table */}
@@ -78,7 +73,7 @@ export function CredentialsSection() {
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-[var(--accent)]" />
                 <h3 className="font-serif text-lg font-bold text-[var(--foreground)]">
-                  Professional Certifications
+                  Certifications
                 </h3>
               </div>
               <span className="font-mono text-xs text-[var(--muted)]">4 Completed (2024)</span>
@@ -97,13 +92,8 @@ export function CredentialsSection() {
                       </h4>
                     </div>
                     <div className="text-xs font-mono text-[var(--muted)]">
-                      Issuing Body: <strong className="text-[var(--accent)] font-medium">{cert.issuer}</strong>
+                      {cert.issuer}
                     </div>
-                    {cert.gradeOrDetail && (
-                      <div className="text-[11px] font-sans text-[var(--muted)]">
-                        {cert.gradeOrDetail}
-                      </div>
-                    )}
                   </div>
 
                   <div className="flex items-center gap-3 shrink-0 pt-1 sm:pt-0">
