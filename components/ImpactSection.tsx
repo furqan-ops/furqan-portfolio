@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { portfolioContent, ProcessStep } from '@/lib/content'
 import {
   UserCheck,
@@ -22,42 +22,6 @@ const stepIcons: { [key: string]: React.ReactNode } = {
 
 export function ImpactSection() {
   const [selectedStep, setSelectedStep] = useState<ProcessStep>(portfolioContent.impactSteps[2]) // Default to Payroll
-  const [payrollRunProgress, setPayrollRunProgress] = useState(0)
-  const [payrollRunActive, setPayrollRunActive] = useState(false)
-  const payrollLedgerRef = useRef<HTMLDivElement>(null)
-
-  // Intersection observer for payroll run micro-animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !payrollRunActive) {
-          setPayrollRunActive(true)
-
-          const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-          if (prefersReduced) {
-            setPayrollRunProgress(45)
-            return
-          }
-
-          let current = 0
-          const interval = setInterval(() => {
-            current += 1
-            setPayrollRunProgress(current)
-            if (current >= 45) {
-              clearInterval(interval)
-            }
-          }, 35) // ~1.5s total to tick all 45 slots
-        }
-      },
-      { threshold: 0.25 }
-    )
-
-    if (payrollLedgerRef.current) {
-      observer.observe(payrollLedgerRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [payrollRunActive])
 
   // Find linked bullet text from CV
   const linkedBullet = portfolioContent.experience.bullets.find(
@@ -85,7 +49,7 @@ export function ImpactSection() {
         </div>
 
         {/* Process Diagram: Horizontal Strip */}
-        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-6 mb-8">
+        <div className="bg-[var(--surface)] border border-[var(--border)] rounded-lg p-4 sm:p-6">
           <div className="text-xs font-mono text-[var(--muted)] uppercase tracking-wider mb-4 flex items-center justify-between">
             <span>Operations Lifecycle</span>
             <span className="text-[var(--accent)] font-semibold">Applivity, Islamabad</span>
@@ -151,80 +115,6 @@ export function ImpactSection() {
               </a>
             </div>
           )}
-        </div>
-
-        {/* "Payroll Run" 45-Row Micro-Ledger */}
-        <div
-          ref={payrollLedgerRef}
-          className="border border-[var(--border)] rounded-lg bg-[var(--surface)] overflow-hidden"
-        >
-          {/* Header of Payroll Ledger */}
-          <div className="px-5 py-4 border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-3 bg-[var(--background)]">
-            <div className="flex items-center gap-3">
-              <div className="w-3 h-3 rounded-full bg-emerald-500" />
-              <div>
-                <div className="font-mono text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">
-                  Monthly Payroll Processing (45 Staff)
-                </div>
-                <div className="font-mono text-[11px] text-[var(--muted)]">
-                  Reconciled in ERPNext &amp; Excel with zero disbursement errors
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 font-mono text-xs">
-              <div className="px-2.5 py-1 rounded bg-[var(--surface)] border border-[var(--border)] text-[var(--foreground)]">
-                Status: <strong className="text-[var(--accent)]">{payrollRunProgress === 45 ? '45/45 COMPLETED' : `PROCESSING (${payrollRunProgress}/45)`}</strong>
-              </div>
-              <div className="text-[var(--muted)] text-[11px] hidden sm:inline">
-                ERPNext &bull; Excel
-              </div>
-            </div>
-          </div>
-
-          {/* Micro Progress Bar */}
-          <div className="w-full bg-[var(--border)] h-1.5 overflow-hidden">
-            <div
-              className="h-full bg-[var(--accent)] transition-all duration-75"
-              style={{ width: `${(payrollRunProgress / 45) * 100}%` }}
-            />
-          </div>
-
-          {/* 45 Micro Ledger Slots Grid */}
-          <div className="p-5">
-            <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2">
-              {Array.from({ length: 45 }).map((_, index) => {
-                const rowNum = index + 1
-                const isComplete = rowNum <= payrollRunProgress
-
-                return (
-                  <div
-                    key={rowNum}
-                    className={`px-2 py-1.5 rounded border text-[10px] font-mono flex items-center justify-between transition-all duration-150 ${
-                      isComplete
-                        ? 'border-emerald-300 dark:border-emerald-900/60 bg-emerald-50/60 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300'
-                        : 'border-[var(--border)] bg-[var(--background)]/60 text-[var(--muted)] opacity-50'
-                    }`}
-                  >
-                    <span className="font-medium">#{String(rowNum).padStart(2, '0')}</span>
-                    {isComplete ? (
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                        OK
-                      </span>
-                    ) : (
-                      <span className="text-[9px] text-[var(--muted)]">...</span>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* Footnote note */}
-            <div className="mt-4 pt-3 border-t border-[var(--border)] flex flex-wrap items-center justify-between text-[11px] font-mono text-[var(--muted)]">
-              <span>Monthly payroll record reconciliation for 45 employees at Applivity.</span>
-              <span className="text-[var(--accent)] font-medium">ERPNext &bull; Frappe HR</span>
-            </div>
-          </div>
         </div>
 
       </div>
